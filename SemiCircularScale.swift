@@ -182,23 +182,17 @@ import UIKit
         let perAngle =  M_PI / Double(markerLabels.count-1)
         for index in 0...markerLabels.count-1 {
             let label = markerLabels[index]
-           // label.textColor = markerLabelColor
             let labelTextSize = label.text?.size(attributes: [NSFontAttributeName: label.font])
-           
             let theta = M_PI + (perAngle * Double(index))
-            if ((perAngle * Double(index)) > (M_PI/2)){
-                let x = CGFloat ( Double (scaleCenter.x) + Double (circleRadius + scaleWidth/2.0 ) * cos(theta) )
-                let y = CGFloat (Double (scaleCenter.y) + Double (circleRadius + scaleWidth/2.0 ) * sin(theta)) - markerLabelHeight
-                label.frame = CGRect(x: x, y: y, width: (labelTextSize?.width)!, height: markerLabelHeight)
-                //label.textColor = baseColor
-                self.bringSubview(toFront: label)
+            let x = CGFloat ( Double (scaleCenter.x) + Double (10.0 + circleRadius + scaleWidth/2.0 ) * cos(theta) )
+            let y = CGFloat (Double (scaleCenter.y) + Double (10.0 + circleRadius + scaleWidth/2.0 ) * sin(theta))
+            label.frame = CGRect(x: x, y: y, width: (labelTextSize?.width)!, height: markerLabelHeight)
+            if ((index == 0) || (index ==  (markerLabels.count-1))) {
+                label.center = CGPoint(x: x, y: y - 5.0)
             }else{
-                let x = CGFloat ( Double (scaleCenter.x) + Double (circleRadius + scaleWidth/2.0 ) * cos(theta)) - (labelTextSize?.width)!
-                let y = CGFloat (Double (scaleCenter.y) + Double (circleRadius + scaleWidth/2.0 ) * sin(theta) ) - markerLabelHeight
-                label.frame = CGRect(x: x, y: y, width: (labelTextSize?.width)!, height: markerLabelHeight)
-                //label.textColor = baseColor
-                self.bringSubview(toFront: label)
+                label.center = CGPoint(x: x, y: y)
             }
+            self.bringSubview(toFront: label)
             
         }
         indicatorView.removeFromSuperview()
